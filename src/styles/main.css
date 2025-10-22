@@ -1,0 +1,57 @@
+/* layout geral */
+body{
+  display:flex; align-items:center; justify-content:center;
+  min-height:100vh; background:#fc1e8a; user-select:none;
+}
+.container{
+  display:flex; flex-direction:column; align-items:center; gap:30px;
+  padding:40px 60px; border-radius:14px;
+  background:linear-gradient(325deg,#03001e 0%,#7303c0 30%,#ec38bc 70%,#fdeff9 100%);
+}
+h2{ color:#fff; letter-spacing:.1em; text-transform:uppercase; font-size:3em; }
+
+/* grade do jogo */
+.game{
+  display:grid; grid-template-columns:repeat(4, 100px); gap:10px;
+  perspective:900px;
+}
+
+/* carta (face com emoji) */
+.item{
+  position:relative; width:100px; height:100px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:44px; background:#fff;
+  transform-style:preserve-3d; transition:transform .35s ease;
+}
+
+/* tampa: completamente opaca (esconde o emoji) */
+.item::after{
+  content:""; position:absolute; inset:0; border-radius:12px;
+  background:#2b2b2b;           /* cinza opaco */
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+  backface-visibility:hidden;
+  opacity:1;                    /* FECHADA = tampada */
+  transform:rotateY(0deg);
+  transition:opacity .2s ease, transform .2s ease;
+}
+
+/* estados de carta aberta/pareada */
+.item.flipped,
+.item.matched{
+  transform:rotateY(180deg);
+}
+.item.flipped::after,
+.item.matched::after{
+  opacity:0;                    /* ABERTA = revela emoji */
+  transform:rotateY(180deg);
+}
+
+/* pares acertados não recebem mais clique */
+.item.matched{ pointer-events:none; }
+
+/* botão opcional */
+.reset{
+  padding:15px 20px; width:100%; border:none; border-radius:8px;
+  background:#fff; color:#000; font-size:1.2em; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; cursor:pointer;
+}
